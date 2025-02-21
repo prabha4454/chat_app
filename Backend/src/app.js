@@ -1,51 +1,34 @@
 import express from "express"
 import dotenv from "dotenv"
+import authRoutes from "./router/auth.route.js"
+import { connectDB } from "./lib/database.js";
+import messageRoutes from "./router/message.route.js"
+import cookieParser from "cookie-parser"
 import cors from "cors"
-import bodyParser from "body-parser"
-import connectDB from "../lib/db.js"
-import {createServer} from "http"
-import {Server} from "socket.io"
-import messageroutes from "../routes/message.route.js"
-import { Socket } from "dgram";
-import {Message} from "../model/message.model.js"
+const app = express();
 dotenv.config();
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT ;
 
-connectDB();
-const app = express()
+app.use(cookieParser())
 
-app.use(cors())
+app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+    
+}))
 
-const server = createServer(app)
-const io = new Server(server)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-/* for router api */
+/* middleware */
 
-app.use("/" ,messageroutes);
-
-/* socket io */
-
-
-
-// Handle client connections and disconnections
-io.on('connection', (socket) => {
-  console.log('A user connected');
-  
-  // Handle disconnection
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-
-  // Example of receiving and emitting messages
-  socket.on('chat message',async (message) => {
-    const newMessage = new Message(message);
-    await newMessage.save();
-    io.emit('chat-message', message);
-  });
-});
+app.use('/api/auth', authRoutes)
+app.use('/api/message', messageRoutes)
 
 
-app.listen(PORT , () => {
-    console.log(`Server is running on port ${PORT}`)
+/* server port */
+app.listen(PORT,()=>{
+    console.log(`Server is running on port ${PORT}`);
+    connectDB()
 })
