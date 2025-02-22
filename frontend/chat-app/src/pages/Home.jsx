@@ -4,6 +4,7 @@ import { axiosInstance } from "../lib/axios.js";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { format } from 'date-fns';
+import { authStateStore } from "../store/authStateStore.js";
 
 export const Home = () => {
   /* const { user } = useAuthStore(); */
@@ -15,6 +16,8 @@ export const Home = () => {
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
   const [response, setResponse] = useState("");
+  const {loggingOut} = authStateStore()
+  
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -104,6 +107,9 @@ export const Home = () => {
                   />
                 </svg>
               </button>
+              <button 
+              className="btn btn-circle"
+              onClick={loggingOut} >out</button>
             </nav>
           </div>
 

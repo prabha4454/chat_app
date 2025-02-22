@@ -3,11 +3,15 @@ import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { axiosInstance } from "../lib/axios";
+import { authStateStore } from '../store/authStateStore';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
 
   const [showPassword, setShowPassword] = useState(false);
     const [response, setResponse] = useState({ message: "", isError: false });
+    const {loggingIn} = authStateStore()
+
   
     const validationSchema = Yup.object({
      
@@ -19,7 +23,8 @@ export const Login = () => {
       
     });
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+  <div className='h-screen grid place-items-center'>
+    <div className=" p-6 bg-white w-md rounded-lg shadow-lg">
           {response.message && (
             <div className={`mb-4 p-3 rounded ${
               response.isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
@@ -38,7 +43,8 @@ export const Login = () => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              axiosInstance.post("/auth/login", values)
+              loggingIn("/auth/login", values)
+             
                 .then(({ data }) => {
                   setResponse({ message: data.message, isError: false });
                   setSubmitting(false);
@@ -112,7 +118,11 @@ export const Login = () => {
                   />
                 </div>
     
-                
+                {/* for navigat to sign up */}
+                <p className=' text-gray-800 mb-5  text-center text-sm font-serif '>
+                  If you Dont'n have an Account :
+                  <Link to="/signup"><span className='underline text-green-600 '>Signup</span></Link>
+                </p>
     
                 <button
                   type="submit"
@@ -135,6 +145,6 @@ export const Login = () => {
             )}
           </Formik>
         </div>
-    
+        </div>
   );
 };
