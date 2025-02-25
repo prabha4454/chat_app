@@ -34,6 +34,7 @@ export const authStateStore = create((set, get) => ({
 
           socket.on("onlineUsers",(users)=>{
             set({onlineUser:users});
+            console.log(get().onlineUser)
           })
    
         

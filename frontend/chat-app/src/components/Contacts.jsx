@@ -1,9 +1,12 @@
 import React from "react";
 import { chatStateStore } from "../store/chatStateStore";
+import { authStateStore } from "../store/authStateStore";
 
 export const Contacts = () => {
   const { contacts, Error, isLoadingContacts, selectedContact, fecthMessages } =
     chatStateStore();
+    const {onlineUser} = authStateStore()
+
 
   return (
     <>
@@ -29,11 +32,18 @@ export const Contacts = () => {
                   selectedContact?._id === contact._id ? "bg-gray-800 " : ""
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-medium">{contact.fullName}</h3>
+                <div className="flex  ">
+                  <div className=" rounded-full block my-auto mr-4">
+                    {contact.pimg?  <img src={contact.pimg} className="size-13 rounded-full chat-image" alt="" />
+                    : <img src={ `/images/defaultavatar.jpg`} className="size-13 rounded-full chat-image" alt="" />}
+                 
+                  </div>
+                  <div className="block p-1">
+                    <h3 className="font-medium  text-md">{contact.fullName}</h3>
                     <p className="text-sm text-gray-400 truncate">
-                      {contact.lastMessage}
+                      { onlineUser.map((users)=>(
+                        users._id === contact._id ? "online" : "offline"
+                      ))}
                     </p>
                   </div>
                   {contact.unread > 0 && (
