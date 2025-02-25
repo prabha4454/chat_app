@@ -9,6 +9,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import {SettingPage} from './pages/SettingPage'
 import { useEffect } from 'react'
 import { authStateStore } from './store/authStateStore'
+
 import {Loader} from "lucide-react"
 import { Toaster } from "react-hot-toast"
 
@@ -16,10 +17,12 @@ import { Toaster } from "react-hot-toast"
 
 function App() {
 
-  const {authUser, checkAuth , isCheckingAuth} = authStateStore()
+  const {authUser, checkAuth , isCheckingAuth,onlineUser} = authStateStore()
 
+console.log({onlineUser})
   useEffect(()=>{
     checkAuth()
+    
   },[checkAuth])
 
   console.log(authUser);
@@ -33,9 +36,13 @@ function App() {
 
   return (
     <>
-   
 
-<Routes>
+    <div className='flex   md:flex-row lg:flex-row flex-col-reverse '>
+      
+      {authUser?<div className='flex'> <Navbar/> </div>:null}
+      
+      <div className='max-w-full h-full  flex-1 '>
+      <Routes>
   <Route path="/" element={ authUser? <Home /> :<Navigate to="/login"/> } />
   <Route path="/signup" element={<Signup />} />
   <Route path="/login" element={!authUser?<Login/>: <Navigate to="/"/>} />
@@ -44,6 +51,14 @@ function App() {
   <Route path="/" element={<Home />} />
 </Routes>
 <Toaster/>
+      </div>
+    
+    </div>
+    
+   
+
+
+
     
     
     </>

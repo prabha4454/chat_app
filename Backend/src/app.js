@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import {server,io,app} from "./lib/socket.js"
 
+
 dotenv.config();
 
 const PORT = process.env.PORT ;
@@ -18,6 +19,8 @@ app.use(cors({
     credentials: true,
     
 }))
+
+  
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

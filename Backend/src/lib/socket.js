@@ -4,21 +4,37 @@ import { Server } from 'socket.io';
 
 export const app = express();
 export const server = http.createServer(app);
-export const io = new Server(server);  // Initialize Socket.IO with the server
+export const io = new Server(server ,{
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST']
+  }
+});  // Initialize Socket.IO with the server
+export const reciverScoketId = (userId)=>{
+  return onlineUsers[userId]
+}
 
 io.on('connection', (socket) => {
   console.log('A user connected');
-  
-  // Handle a message event from the client
-  socket.on('message', (data) => {
-    console.log(data);
-  });
 
-  // Emit an event back to the client
-  socket.emit('welcome', { message: 'Welcome to the server!' });
+
+  
+  //for online users
+  const onlineUsers ={};
+  const userId = socket.handshake.query.userId;
+  
+  if(userId) onlineUsers[userId]=socket.id
+
+    // emit to all connected clients
+    io.emit('onlineUsers', Object.keys(onlineUsers));
+
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+ 
+    console.log('A user disconnected',socket.id);
+    delete onlineUsers[userId];
+    // emit to all connected clients
+    io.emit('onlineUsers', Object.keys(onlineUsers));
   });
 });
 
