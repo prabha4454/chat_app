@@ -1,7 +1,9 @@
 import cloudinaryConfig from "../lib/cloudinary.js";
-import {  reciverScoketId } from "../lib/socket.js";
+import  {ReciverScoketId}  from "../lib/socket.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
+import { io } from "../lib/socket.js";
+
 
 
 export const getUsersForSidebar = async (req , res ) =>{
@@ -74,7 +76,7 @@ export const getMessages = async (req , res ) =>{
           const savedMessage = await message.save()
 
 //toto real time chat with socket.io
-    const reciverScoketId = reciverScoketId(reciverId);
+    const reciverScoketId= ReciverScoketId(reciverId);
     if(reciverScoketId){
         io.to(reciverScoketId).emit('newMessage', savedMessage);
     }

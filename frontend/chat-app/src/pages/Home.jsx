@@ -10,8 +10,7 @@ import { Contacts } from "../components/Contacts.jsx";
 
 export const Home = () => {
   /* const { user } = useAuthStore(); */
-  const { fetchContacts , selectedContact ,rightStyle ,leftStyle} = chatStateStore();
-
+  const { fetchContacts , selectedContact ,rightStyle ,leftStyle,} = chatStateStore();
 
   const [chat, setChat] = useState("show");
   const [contacts, setContacts] = useState([]);
@@ -19,7 +18,7 @@ export const Home = () => {
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
   const [response, setResponse] = useState("");
-  const { loggingOut } = authStateStore();
+  const { loggingOut,onlineUser } = authStateStore();
 
   useEffect(() => {
     fetchContacts();
@@ -41,9 +40,57 @@ export const Home = () => {
           {selectedContact ? (
             <>
               <div className="p-4 border-b border-gray-700">
-                <h2 className="text-xl font-semibold">
-                  {selectedContact.fullName}
-                </h2>
+              <div className="flex  ">
+                <div className=" rounded-full block my-auto mr-4">
+                  {onlineUser.includes(selectedContact._id) ? (
+                    <div className="relative size-13 rounded-full">
+                      {selectedContact.pimg ? (
+                        <img
+                          src={selectedContact.pimg}
+                          className="  rounded-full border-4 border-blue-500"
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={`/images/defaultavatar.jpg`}
+                          className="  border-2 rounded-full border-green-500"
+                          alt=""
+                        />
+                      )}
+
+                      {/* <div
+                        className={
+                          "absolute top-1 right-1 size-3 bg-green-700 rounded-full border-2 border-white"
+                        }
+                      ></div> */}
+                    </div>
+                  ) : (
+                    <div className="avatar offline">
+                      <div className="size-13 rounded-full">
+                        {selectedContact.pimg ? (
+                          <img
+                            src={selectedContact.pimg}
+                            className=" border-2 rounded-full border-gray-700 chat-image"
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            src={`/images/defaultavatar.jpg`}
+                            className=" border-2 rounded-full border-gray-700 chat-image"
+                            alt=""
+                          />
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="block p-1">
+                  <h3 className="font-medium  text-md">{selectedContact.fullName}</h3>
+                  <p className="text-sm text-gray-400 truncate">
+                    {onlineUser.includes(selectedContact._id) ? "online" : "offline"}
+                  </p>
+                </div>
+                </div>
               </div>
 
               {/* to show the chat history */}

@@ -15,20 +15,24 @@ export const MessageInput = () => {
                   }}
                   onSubmit={(values, { setSubmitting }) => {
 
-                    if(!values){
-                      toast.error("please enter some message")
-                      return
-                    }
+                    if(!values.text)
+                    { 
+                     console.log(values) 
+                      return(toast.error("please enter some message")) }
+                     
+                     
+                    
 
            
               sendMessage(values)
                       .then(({ data }) => {
                         
                         setSubmitting(false);
+                        values=null
                       })
                       .catch((error) => {
                       toast.error(error.message)
-                      console.lgo("Error sending message:",error)
+                      console.log("Error sending message:",error)
                         setSubmitting(false);
                       });
                   }}

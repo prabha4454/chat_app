@@ -11,8 +11,22 @@ export const Navbar = () => {
    <>
     <div className="flex flex-col-reverse md:flex-row lg:flex-row mx-auto  ">
              <div className="p-1 md:border-r lg:border-r lg:border-gray-700 md: border-gray-700 block  ">
-               <nav className={`flex lg:flex-col md:flex-col flex-row w-full  lg:space-x-0 md:space-x-0 space-x-5`}>
+               <nav className={`flex lg:flex-col md:flex-col flex-row w-full md:space-y-4 lg:space-y-4 lg:space-x-0 md:space-x-0 space-x-5`}>
                 
+               <button
+                  onClick={()=>setActiveTab("profile")}
+                
+                   className={`p-2 rounded-lg ${
+                     activeTab === "profile" ? "bg-gray-800" : ""
+                   }`}
+                 >
+                  <Link to={"/porfile"}>
+                  <div className='rounded-full border-green-600 size-7'>
+                     
+                  <img src="/images/defaultavatar.jpg" className='rounded-full' alt="" />
+                  </div>
+                  </Link>
+                  </button>
                
                  <button
                   onClick={()=>setActiveTab("chat")}
@@ -21,6 +35,8 @@ export const Navbar = () => {
                      activeTab === "chat" ? "bg-gray-800" : ""
                    }`}
                  >
+
+              
                    <Link to="/">
                    <svg
                      className="w-6 h-6"
@@ -43,6 +59,7 @@ export const Navbar = () => {
                      activeTab === "settings" ? "bg-gray-800" : ""
                    }`}
                  >
+                  <Link to={"/settings"}>
                    <svg
                      className="w-6 h-6"
                      fill="none"
@@ -62,9 +79,12 @@ export const Navbar = () => {
                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                      />
                    </svg>
+                   </Link>
                  </button>
-                 <button className="btn btn-circle" onClick={loggingOut}>
-                   out
+                 <button className="p-2 rounded-lg hover:bg-gray-50 hover:text-red-500" onClick={loggingOut}>
+                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
                  </button>
                </nav>
              </div>

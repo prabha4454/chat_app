@@ -10,23 +10,25 @@ export const io = new Server(server ,{
     methods: ['GET', 'POST']
   }
 });  // Initialize Socket.IO with the server
-export const reciverScoketId = (userId)=>{
-  return onlineUsers[userId]
+export const ReciverScoketId = (userId)=>{
+  return (onlineUsers[userId])
 }
-
+const onlineUsers ={};
 io.on('connection', (socket) => {
   console.log('A user connected');
 
 
   
   //for online users
-  const onlineUsers ={};
-  const userId = socket.handshake.query.userId;
+  
+  const userId = socket.handshake.query.userId
   
   if(userId) onlineUsers[userId]=socket.id
 
     // emit to all connected clients
     io.emit('onlineUsers', Object.keys(onlineUsers));
+    console.log(userId)
+    console.log(onlineUsers)
 
 
   socket.on('disconnect', () => {

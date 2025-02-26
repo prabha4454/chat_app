@@ -11,14 +11,14 @@ export const ChatsSpace = () => {
      {messages.map((message) => (
                       <div
                         key={message._id}
-                        className={message.senderId===authUser._id ? "text-right" : "text-left"}
+                        className={ `chat  ${message.senderId===authUser.user._id ?  "chat-end" : "chat-start"}` }
                       >
                         <div
-                          className={`inline-block ${
-                            message.senderId === authUser._id
+                          className={`inline-block chat-bubble ${
+                            message.senderId === authUser.user._id
                               ? "bg-blue-600 text-white"
                               : "bg-gray-800 text-gray-100"
-                          } p-3 rounded-lg max-w-xs lg:max-w-md`}
+                          } rounded-xl`}
                         >
                           {message.text}
                           <div

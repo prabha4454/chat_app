@@ -19,24 +19,31 @@ export const authStateStore = create((set, get) => ({
   connectSocket: async () => {
     const {authUser} = get();
     console.log(authUser)
- 
-        if(!authUser || get().socket?.connected)return
+ try{
+
+  if(!authUser || get().socket?.connected) return;
            
          
-                 const socket = io("http://localhost:5000", {
-            
-            query:{
-                userId: authUser._id
-            }
-          });
-          socket.connect();
-          set({ socket:socket });
+  const socket = io("http://localhost:5000", {
 
-          socket.on("onlineUsers",(users)=>{
-            set({onlineUser:users});
-            console.log(get().onlineUser)
-          })
-   
+query:{
+ userId:authUser.user._id
+}
+});
+socket.connect();
+set({ socket:socket });
+
+socket.on("onlineUsers",(users)=>{
+set({onlineUser:users});
+console.log(get().onlineUser)
+
+
+})
+
+ }
+ catch(error){
+  console.log(error)
+ }
         
 
    

@@ -56,15 +56,23 @@ setActiveTab: async (tab)=>{
       set({ isLoadingMessages: false });
     }
   },
-
   //for sending message 
 
   sendMessage: async (values) => {
-      axiosInstance.post(
-      `/message/send/${get().selectedContact._id}`,
-      values
-    );
-   
+   const newMessage = await axiosInstance.post(
+    `/message/send/${get().selectedContact._id}`,
+    values
+  );
+if(newMessage){
+  set({messages:[...get().messages , newMessage]})
+  
+}
 
-  },
+ 
+
+},
+
+
+
+
 }));
