@@ -3,7 +3,8 @@ import {
   signUp,
   login,
   logout,
-  updateProfile,
+  updateProfilePic,
+  updateProfileDetail,
   checkAuth,
 } from "../controller/auth.control.js";
 
@@ -22,7 +23,8 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 /* for update user profile */
-router.put("/update-userProfile", authRoute, updateProfile);
+router.put("/update-userProfilePic", authRoute, updateProfilePic);
+router.put("/update-userProfileDetail", authRoute, updateProfileDetail);
 
 router.get("/check", authRoute, checkAuth); // to check authentication and also i need to learn more about this
 

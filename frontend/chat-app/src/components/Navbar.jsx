@@ -9,9 +9,9 @@ export const Navbar = () => {
     const {loggingOut} = authStateStore();
   return (
    <>
-    <div className="flex flex-col-reverse md:flex-row lg:flex-row mx-auto  ">
+    <div className="flex flex-col-reverse md:flex-row lg:flex-row mx-auto   ">
              <div className="p-1 md:border-r lg:border-r lg:border-gray-700 md: border-gray-700 block  ">
-               <nav className={`flex lg:flex-col md:flex-col flex-row w-full md:space-y-4 lg:space-y-4 lg:space-x-0 md:space-x-0 space-x-5`}>
+               <nav className={`flex lg:flex-col md:flex-col flex-row w-full md:space-y-4 lg:space-y-4 lg:space-x-0 md:space-x-0 space-x-5 text-white`}>
                 
                <button
                   onClick={()=>setActiveTab("profile")}

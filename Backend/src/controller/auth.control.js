@@ -105,7 +105,7 @@ PUT
 for update user profile
  */
 
-export const updateProfile = async (req, res) => {
+export const updateProfilePic = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -130,6 +130,32 @@ export const updateProfile = async (req, res) => {
           }
       };
 
+      /* 
+      Put
+      FOR UPDATING USER DETAILS 
+       */
+      export const updateProfileDetail = async (req, res) => {
+        try {
+          const user = await User.findById(req.user._id);
+          if (!user) {
+            return res.status(404).json({ message: "User not found" });
+            }
+            const {fullName,bio } = req.body;
+            if (!fullName) {
+              return res.status(400).json({ message: "FullName is required" });
+            };
+            const userId = req.user._id;
+          
+            const updatedUserDetails = await User.findByIdAndUpdate(userId, {
+              fullName:fullName,
+              bio:bio,
+              }, { new: true });
+              res.status(200).json({ message: "User Profile Details Updated Successfully" , updatedUserDetails});
+              } catch (error) {
+                console.log('Error in update profile details controller:', error.message);
+                res.status(500).json({ message: "Internal server error" });
+                }
+            };
       /*  
       GET 
       FOR  chek authentication
