@@ -6,13 +6,21 @@ import messageRoutes from "./router/message.route.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import {server,io,app} from "./lib/socket.js"
-
+import path from "path"
+import { fileURLToPath } from 'url';
+import bodyParser from "body-parser"
 
 dotenv.config();
 
 const PORT = process.env.PORT ;
-
+app.use(bodyParser.json());
 app.use(cookieParser())
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve the 'public' folder statically
+app.use("/public",express.static("../public"));
 
 app.use(cors({
     origin: ["http://localhost:5173", "http://localhost:5174"],

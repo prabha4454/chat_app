@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-import { authRoute } from "../../../../Backend/src/middleware/user.authrote";
+
 
 export const authStateStore = create((set, get) => ({
   authUser: null,
@@ -32,6 +32,7 @@ query:{
  userId:authUser.user._id
 }
 });
+
 socket.connect();
 set({ socket:socket });
 
@@ -64,7 +65,7 @@ console.log(get().onlineUser)
       const response = await axiosInstance.get("/auth/check");
 
       set({ authUser: response.data });
-      set({userProfile:response.data})
+      set({userProfile:response.data.user})
       get().connectSocket()
     } catch (error) {
       console.log("Error in checkAuth:", error);
@@ -103,10 +104,13 @@ console.log(get().onlineUser)
   },
 
   editingProfileDetiail: async (values) =>{
+    if(!values.fullName){
+      return(toast.error("Name is required"))
+    }
     try{
 const response = await axiosInstance.put("/auth/update-userProfileDetail", values);
-set({authUser:response.data})
-set({userProfile:response.data})
+
+set({userProfile:response.data.updatedUser })
 toast.success(response.data.message);
     }
     catch(err){

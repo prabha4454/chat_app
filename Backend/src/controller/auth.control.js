@@ -2,6 +2,11 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utill.js";
 import cloudinaryConfig from "../lib/cloudinary.js";
+import {v2 as cloudinary} from 'cloudinary';
+
+
+
+
 
 /* 
 Post 
@@ -107,23 +112,25 @@ for update user profile
 
 export const updateProfilePic = async (req, res) => {
   try {
+    console.log(req.file);
+    console.log(req.body)
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
-      }
-      const {profilePic } = req.body;
-      if (!profilePic) {
-        return res.status(400).json({ message: "profilePic is required" });
-      };
-      const userId = req.user._id;
-     const uploadReponse = await cloudinary.uploader.upload(profilePic, {
-      folder: "users",
-      public_id: userId,
-      });
-      const updatedUser = await User.findByIdAndUpdate(userId, {
-        profilePic: uploadReponse.secure_url
-        }, { new: true });
-        res.status(200).json({ message: "User Profile Updated Successfully" , updatedUser});
+    }
+
+    const userId = req.user._id;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePic: req.file.path },
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: "User Profile Updated Successfully",
+      updatedUser,
+    });
+
         } catch (error) {
           console.log('Error in update profile controller:', error.message);
           res.status(500).json({ message: "Internal server error" });
@@ -146,11 +153,11 @@ export const updateProfilePic = async (req, res) => {
             };
             const userId = req.user._id;
           
-            const updatedUserDetails = await User.findByIdAndUpdate(userId, {
+            const updatedUser = await User.findByIdAndUpdate(userId, {
               fullName:fullName,
               bio:bio,
               }, { new: true });
-              res.status(200).json({ message: "User Profile Details Updated Successfully" , updatedUserDetails});
+              res.status(200).json({ message: "User Profile Details Updated Successfully" , updatedUser});
               } catch (error) {
                 console.log('Error in update profile details controller:', error.message);
                 res.status(500).json({ message: "Internal server error" });
@@ -171,8 +178,3 @@ export const updateProfilePic = async (req, res) => {
               res.status(500).json({ message: "Internal server error" });
               }
               };
-              
-
-
-
-

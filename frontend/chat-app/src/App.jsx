@@ -12,8 +12,7 @@ import { authStateStore } from './store/authStateStore'
 
 import {Loader} from "lucide-react"
 import { Toaster } from "react-hot-toast"
-import{ Buffer } from 'buffer';
-window.Buffer = Buffer;
+
 
 
 
@@ -39,7 +38,7 @@ console.log({onlineUser})
   return (
     <>
 
-    <div className='flex   md:flex-row lg:flex-row flex-col-reverse '>
+    <div  className='flex   md:flex-row lg:flex-row flex-col-reverse '>
       
       {authUser?<div className='flex bg-black'> <Navbar/> </div>:null}
       

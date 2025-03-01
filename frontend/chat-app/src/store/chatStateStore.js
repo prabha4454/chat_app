@@ -2,6 +2,9 @@ import { create } from "zustand";
 import { Contacts } from "../components/Contacts";
 import { axiosInstance } from "../lib/axios";
 import { authStateStore } from "./authStateStore";
+import toast from "react-hot-toast";
+
+
 
 export const chatStateStore = create((set, get) => ({
   isLoadingContacts: false,
@@ -59,15 +62,25 @@ setActiveTab: async (tab)=>{
   //for sending message 
 
   sendMessage: async (values) => {
-   const newMessage = await axiosInstance.post(
-    `/message/send/${get().selectedContact._id}`,
-    values
-  );
-if(newMessage){
-  set({messages:[...get().messages , newMessage]})
-  
-}
 
+    try{
+      const message = await axiosInstance.post(
+        `/message/send/${get().selectedContact._id}`,
+        values
+      );
+    
+    /*  const newMessage= socket.on("newMessage" ,newMessage) */
+     
+     if(newMessage){
+      set({messages:[...get().messages , newMessage]})
+      
+    }
+    toast.success("message send succesfully")
+    }
+catch(error){
+  console.log("Error in sending message at chatStateState:",error.message)
+  toast.error(error.message)
+}
  
 
 },
@@ -76,3 +89,4 @@ if(newMessage){
 
 
 }));
+

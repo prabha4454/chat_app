@@ -4,32 +4,37 @@ import { FaUserEdit } from "react-icons/fa";
 import { authStateStore } from "../store/authStateStore";
 import { format } from 'date-fns';
 import Editprofile from "../components/Editprofile";
+import { AddPic } from "../components/AddPic";
+import { profileStateStore } from "../store/profileStateStore";
 
 export const ProfilePage = () => {
   const {userProfile} = authStateStore();
+  const {profilePic} = profileStateStore();
   return (
-    <div className="min-h-screen bg-gray-100 py-8 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 py-8 flex items-center justify-center">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
    <div className="flex justify-self-end">
-   <button className=" text-blue-600 flex items-center font-medium hover:cursor-pointer" onClick={()=>document.getElementById('my_modal_3').showModal()}>
+   <div className=" text-blue-600 flex items-center font-medium hover:cursor-pointer" onClick={()=>document.getElementById('edit-profile-details').showModal()}>
     <Editprofile />
-    <FaUserEdit className="size-5" />Edit
-   </button>
+    <FaUserEdit className="size-4.5" /> Edit
+   </div>
    </div>
    
         {/* Profile Header */}
         <div className="flex flex-col items-center mb-8">
           <div className="relative">
             <img
-              src="/images/defaultavatar.jpg"
+              src={profilePic}
               alt="Profile"
               className="w-32 h-32 rounded-full border-3 border-gray-300"
             />
-            <div className="absolute bottom-3 right-3 w-9 h-9    rounded-full border-2 border-transparent hover:cursor-pointer bg-gray-800 opacity-40 pt-0.5">
-              <TbCameraPlus className="size-7 mx-auto  text-gray-100 " />
+            <div className="absolute bottom-3 right-3 w-9 h-9    rounded-full border-2 border-gray-400 hover:cursor-pointer bg-gray-800 opacity-40 pt-0.5 "
+            onClick={()=>document.getElementById('edit-profile-pic').showModal()}>
+              <AddPic />
+                 <TbCameraPlus className="size-7 mx-auto  text-gray-100 " />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-green-500  mt-4">{userProfile.user.fullName}</h2>
+          <h2 className="text-xl font-bold text-green-600  mt-4">{userProfile.fullName}</h2>
           {/* <p className="text-gray-600 flex items-center">
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
             Online
@@ -39,16 +44,16 @@ export const ProfilePage = () => {
         {/* Profile Details */}
         <div className="space-y-4">
           <div>
-            <label className="text-gray-500 text-sm">Bio:</label>
-            <p className="text-gray-800 mt-1">
-              Frontend Developer | React enthusiast | Coffee lover
+            <label className="text-gray-500 dark:text-gray-300 text-sm">Bio:</label>
+            <p className="text-gray-800 dark:text-gray-500 mt-1">
+             {userProfile.bio}
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-gray-500 text-sm">User Id:</label>
-              <p className="text-gray-800 mt-1">{userProfile.user.email}</p>
+              <label className="text-gray-500 dark:text-gray-300 text-sm">User Id:</label>
+              <p className="text-gray-800  dark:text-gray-500  mt-1">{userProfile.email}</p>
             </div>
            {/*  <div>
               <label className="text-gray-500 text-sm">Phone</label>
@@ -57,8 +62,8 @@ export const ProfilePage = () => {
           </div>
 
           <div>
-            <label className="text-gray-500 text-sm">Member Since:</label>
-            <p className="text-gray-800 mt-1">{format(userProfile.user.createdAt, 'dd/mm/yyyy')}</p>
+            <label className="text-gray-500  dark:text-gray-300 text-sm">Member Since:</label>
+            <p className="text-gray-800  dark:text-gray-500  mt-1">{format(userProfile.createdAt, 'dd/mm/yyyy')}</p>
           </div>
         </div>
 

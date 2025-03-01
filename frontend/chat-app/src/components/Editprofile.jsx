@@ -11,7 +11,7 @@ const Editprofile = () => {
     <>
     {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
-<dialog id="my_modal_3" className="modal">
+<dialog id="edit-profile-details" className="modal">
   <div className="modal-box">
     <form method="dialog">
       {/* if there is a button in form, it will close the modal */}
@@ -23,13 +23,13 @@ const Editprofile = () => {
     <Formik
             initialValues={{
               
-              fullName: userProfile.user.fullName,
+              fullName: userProfile.fullName,
               
-              bio: userProfile.user.bio,
+              bio: userProfile.bio,
               
             }}
            
-            /* onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting }) => {
             
               editingProfileDetiail(values)
                 .then(({ data }) => {
@@ -40,7 +40,7 @@ const Editprofile = () => {
                   
                   setSubmitting(false);
                 });
-            }} */
+            }}
           >
             {({ isSubmitting }) => (
               <Form>
@@ -52,7 +52,7 @@ const Editprofile = () => {
                     type="text"
                     name="fullName"
                     id="email"
-                    className="w-full px-3 py-2 border text-black  border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border text-black dark:text-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your FullName"
                   />
                  
@@ -65,7 +65,7 @@ const Editprofile = () => {
                     component = "textarea"
                     name="bio"
                     id="bio"
-                    className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring- focus:ring-blue-500"
+                    className="w-full px-3 py-2 border text-black dark:text-white border-gray-300 rounded-md focus:outline-none focus:ring- focus:ring-blue-500"
                     placeholder="bio"
                   />
                   <ErrorMessage

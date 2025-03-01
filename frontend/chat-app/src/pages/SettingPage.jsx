@@ -6,12 +6,29 @@ import React, { useState } from 'react';
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    setIsDarkMode(!isDarkMode);
+    setTheme(newTheme)
+  changeTheme(newTheme)
+      /*  setTheme(newTheme);
+    setIsDarkMode(!isDarkMode); */
     // Add logic to apply theme to the entire application
-    document.documentElement.classList.toggle('dark', !isDarkMode);
+   /*  document.documentElement.classList.toggle('dark', !isDarkMode); */
   };
+  /* const themeToggle = document.getElementById("themeToggle");
 
+  // Load saved theme from localStorage
+  document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "light");
+  themeToggle.checked = localStorage.getItem("theme") === "dark";
+  
+  themeToggle.addEventListener("change", () => {
+    const newTheme = themeToggle.checked ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+ */
+  const changeTheme = (newTheme) => {
+    document.documentElement.setAttribute("data-theme",newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
   const handleLogout = () => {
     // Add your logout logic here
     console.log('User logged out');
@@ -19,7 +36,7 @@ import React, { useState } from 'react';
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
-      <div className="max-w-md mx-auto p-6">
+      <div className="max-w-2xl mx-auto p-6">
         <div className={`rounded-2xl shadow-xl p-6 transition-colors duration-300 ${
           isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
         }`}>
@@ -46,28 +63,46 @@ import React, { useState } from 'react';
                 <p className="text-sm opacity-75">{theme.charAt(0).toUpperCase() + theme.slice(1)} Mode</p>
               </div>
             </div>
-            <button
+           {/*  <button
               onClick={toggleTheme}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
                 isDarkMode ? 'bg-blue-500' : 'bg-gray-300'
               }`}
             >
               <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
-                isDarkMode ? 'translate-x-6' : 'translate-x-1'
+                theme === "dark"? 'translate-x-6' : 'translate-x-1'
               }`} />
-            </button>
+            </button> */}
+          <input type="checkbox" value="synthwave" id='themeToggle' className="toggle theme-controller" />
           </div>
 
           {/* Logout Button */}
+          <div className='loggout-button-section dark:text-gray-600 border-t-1 dark:border-gray-700 boder-gray-300  text-black text-sm mt-4'>
+            <p className='dark:text-white my-3'>Click this button to safely log out of your account and end your session.</p>
           <button
+
             onClick={handleLogout}
-            className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-lg bg-red-500 hover:bg-red-600 text-white transition-colors duration-200"
+            className="btn btn-sm flex justify-self-end items-center justify-center space-x-1 py-3 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200 border-0 shadow-sm shadow-gray-900"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
+            </svg> */}
             <span>Log Out</span>
           </button>
+          </div>
+          {/* remove user accoutn button */}
+<div className='remove-account-section dark:text-gray-600 text-black text-sm  border-t-1 dark:border-gray-700 boder-gray-300  mt-4'>
+<p className='dark:text-white   my-3'>Click this button to permanently delete your account and remove all associated data</p>
+<p className='pl-5 text-gray-600 '><span>NOTE:</span>This action is permanent and cannot be undone. All your data will be lost. If you're certain, click 'Delete Account' below."</p>
+          <button
+            onClick={handleLogout}
+            className="btn btn-sm flex  justify-self-end items-center justify-center space-x-1 py-3 px-4 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors duration-200 border-0 shadow-sm shadow-gray-900"
+          >
+          
+            <span>Remove</span>
+          </button>
+</div>
+          
         </div>
       </div>
     </div>
