@@ -4,10 +4,19 @@ import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import Editprofile from "../components/Editprofile";
 import { isValid } from "date-fns";
+import { authStateStore } from "./authStateStore";
 
 export const profileStateStore = create((set) => ({
   profilePic: "/images/defaultavatar.jpg",
   isLoadingProfilePic: false,
+
+  getUserProfilePic:()=>{
+const pic = authStateStore.getState().authUser.user.profilePic
+if(pic){
+  set({profilePic:`http://localhost:5000/${pic}`})
+  console.log(pic)
+}
+  },
 
 
   //for adding and edditing user profile picture

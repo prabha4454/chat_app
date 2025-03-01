@@ -13,21 +13,21 @@ export const chatStateStore = create((set, get) => ({
   Error: null,
   selectedContact: null,
   messages: [],
-rightStyle:"hidden",
-leftStyle:"block",
-activeTab:"chat",
+  rightStyle: "hidden",
+  leftStyle: "block",
+  activeTab: "chat",
 
-setActiveTab: async (tab)=>{
+  setActiveTab: async (tab) => {
 
-  set({activeTab:tab})
-  set({rightStyle:"hidden"})
-    set({leftStyle:"block"})
-  
-},
+    set({ activeTab: tab })
+    set({ rightStyle: "hidden" })
+    set({ leftStyle: "block" })
+
+  },
   //to get users list from server
   fetchContacts: async () => {
     try {
-      
+
 
       set({ isLoadingContacts: true });
       const userRes = await axiosInstance.get("/message/users");
@@ -35,18 +35,18 @@ setActiveTab: async (tab)=>{
     } catch (err) {
       set({ Error: err.message });
     } finally {
-      set({ isLoadingContacts: false});
+      set({ isLoadingContacts: false });
     }
   },
 
   //to get messages  from server
   fecthMessages: async (contact) => {
-    if(get().rightStyle === "hidden") {
-      set({rightStyle:"flex"})
-            } 
-            if(get().leftStyle === "block"){
-              set({leftStyle:"hidden"})
-            }
+    if (get().rightStyle === "hidden") {
+      set({ rightStyle: "flex" })
+    }
+    if (get().leftStyle === "block") {
+      set({ leftStyle: "hidden" })
+    }
     try {
       set({ isLoadingMessages: true });
       set({ selectedContact: contact });
@@ -63,30 +63,45 @@ setActiveTab: async (tab)=>{
 
   sendMessage: async (values) => {
 
-    try{
+    try {
       const message = await axiosInstance.post(
         `/message/send/${get().selectedContact._id}`,
         values
       );
-    
-    /*  const newMessage= socket.on("newMessage" ,newMessage) */
-     
-     if(newMessage){
-      set({messages:[...get().messages , newMessage]})
-      
+      console.log(message.data)
+      set({messages:[...get().messages , message.data.savedMessage]})
+
+
+
+
+
+
+      toast.success("message send succesfully")
     }
-    toast.success("message send succesfully")
+    catch (error) {
+      console.log("Error in sending message at chatStateState:", error.message)
+      toast.error(error.message)
     }
-catch(error){
-  console.log("Error in sending message at chatStateState:",error.message)
-  toast.error(error.message)
-}
- 
-
-},
 
 
+  },
+
+  subscribeToMessage:async ()=>{
+    const socket =  authStateStore.getState().socket
+   
+   await socket.on("newMessage" ,(savedMessage)=>{
+      console.log("new messages",savedMessage)
+    set({messages:[...get().messages , savedMessage]})
+   })
+  },
+  unsubscribeToMessage:async()=>{
+    const socket =  authStateStore.getState().socket
+    await socket.off("newMessage")
+  }
 
 
 }));
+
+
+
 

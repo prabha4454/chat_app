@@ -20,7 +20,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve the 'public' folder statically
-app.use("/public",express.static("../public"));
+app.use("/public",express.static("public/"));
 
 app.use(cors({
     origin: ["http://localhost:5173", "http://localhost:5174"],

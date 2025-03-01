@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { profileStateStore } from "../store/profileStateStore";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 export const AddPic = () => {
-  const { editProfilePic } = profileStateStore();
-  const validationSchema = Yup.object({
-    profilePic: Yup.mixed().required("A file is required"),
-  });
+  const { editProfilePic ,profilePic } = profileStateStore();
 
+  const [file, setFile] = useState()
+  const handdleFileInput = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  }
+  const handdleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("profilePic", file)
+
+    try {
+      editProfilePic(formData)
+      .then(
+        setFile("")
+      )
+    }
+
+    catch (error) {
+console.log(error)
+    }
+  }
   return (
     <>
       <dialog id="edit-profile-pic" className="modal">
@@ -20,7 +39,9 @@ export const AddPic = () => {
             </button>
           </form>
           <div className="mt-5 p-1">
-            <Formik
+
+            {/* user profile upload and edit  usin formik (formik doesn't support file upload) */}
+            {/*             <Formik
               initialValues={{
                 profilePic: null,
               }}
@@ -69,7 +90,28 @@ export const AddPic = () => {
                   </button>
                 </Form>
               )}
-            </Formik>
+            </Formik> */}
+
+            {/* form for add and edit user porfile picture */}
+
+            <form action="" onSubmit={handdleSubmit}>
+              <div>
+
+                <input type="file" 
+                name="profilePic"
+                className="file-input file-input-info"
+                  
+                  onChange={handdleFileInput} />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-info mt-5 flex justify-self-end rounded-md"
+
+
+              >
+                Done
+              </button>
+            </form>
           </div>
         </div>
       </dialog>

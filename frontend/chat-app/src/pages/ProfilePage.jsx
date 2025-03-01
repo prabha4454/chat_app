@@ -6,10 +6,15 @@ import { format } from 'date-fns';
 import Editprofile from "../components/Editprofile";
 import { AddPic } from "../components/AddPic";
 import { profileStateStore } from "../store/profileStateStore";
+import { useEffect } from "react";
 
 export const ProfilePage = () => {
   const {userProfile} = authStateStore();
-  const {profilePic} = profileStateStore();
+  const {profilePic , getUserProfilePic} = profileStateStore();
+
+  useEffect(()=>{
+    getUserProfilePic()
+  },[getUserProfilePic,profilePic])
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-800 py-8 flex items-center justify-center">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">

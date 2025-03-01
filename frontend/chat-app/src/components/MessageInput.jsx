@@ -25,10 +25,10 @@ export const MessageInput = () => {
 
            
               sendMessage(values)
-                      .then(({ data }) => {
+                      .then(() => {
                         
                         setSubmitting(false);
-                        values=null
+                    
                       })
                       .catch((error) => {
                       toast.error(error.message)
