@@ -35,7 +35,7 @@ import React, { useState } from 'react';
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+    <div className={"min-h-screen transition-colors duration-300 dark:bg-gray-500 bg-gray-100"}>
       <div className="max-w-2xl mx-auto p-6">
         <div className={`rounded-2xl shadow-xl p-6 transition-colors duration-300 ${
           isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
