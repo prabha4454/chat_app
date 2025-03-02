@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.0.7",
     "axios": "^1.7.9",
     "buffer": "^6.0.3",
+    "chat_app": "file:../..",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
     "lucide-react": "^0.475.0",

@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
+const BASE_URL = import.meta.env.MODE === "development" ?"http://localhost:5000" : "/"
 
 export const authStateStore = create((set, get) => ({
   authUser: null,
@@ -26,7 +27,7 @@ export const authStateStore = create((set, get) => ({
   if(!authUser || get().socket?.connected) return;
            
          
-  const socket = io("http://localhost:5000", {
+  const socket = io(BASE_URL, {
 
 query:{
  userId:authUser.user._id
