@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 export const AddPic = () => {
-  const { editProfilePic ,profilePic } = profileStateStore();
+  const { editProfilePic ,profilePic,isLoadingProfilePic } = profileStateStore();
 
   const [file, setFile] = useState()
   const handdleFileInput = (e) => {
@@ -106,12 +106,24 @@ console.log(error)
               <button
                 type="submit"
                 className="btn btn-info mt-5 flex justify-self-end rounded-md"
+                disabled= {isLoadingProfilePic}
 
 
               >
-                Done
+                {isLoadingProfilePic?
+                <span className="loading loading-spinner loading-md"></span>
+                :"Done"}
+               
               </button>
+
             </form>
+          
+
+          {/* for progress loader */}
+           {/*  <div className="radial-progress " style={{ "--value": 70 }  } 
+  aria-valuenow={70} role="progressbar"></div> */}
+            
+
           </div>
         </div>
       </dialog>

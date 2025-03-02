@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export const ProfilePage = () => {
   const {userProfile} = authStateStore();
-  const {profilePic , getUserProfilePic} = profileStateStore();
+  const {profilePic , getUserProfilePic ,isLoadingProfilePic} = profileStateStore();
 
   useEffect(()=>{
     getUserProfilePic()
