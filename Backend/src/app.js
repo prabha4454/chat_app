@@ -39,9 +39,9 @@ app.use('/api/auth', authRoutes)
 app.use('/api/message', messageRoutes)
 
 if(process.env.SECURE_ENV  === "production"){
-    app.use(express.static(path.join(__dirname, '../forntend/chat-app/dist')));
+    app.use(express.static(path.join(__dirname, '../../forntend/chat-app/dist')));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../frontend',"chat-app","dist", 'index.html'));
+        res.sendFile(path.join(__dirname, '../../frontend',"chat-app","dist", 'index.html'));
         });
     }
 
