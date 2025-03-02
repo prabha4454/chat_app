@@ -18,11 +18,12 @@ export const Home = () => {
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
   const [response, setResponse] = useState("");
-  const { loggingOut,onlineUser } = authStateStore();
+  const { loggingOut,onlineUser,checkAuth ,userProfile} = authStateStore();
 
   useEffect(() => {
     fetchContacts();
-  }, []);
+checkAuth();
+  }, [checkAuth]);
 
  
   return (

@@ -81,6 +81,7 @@ console.log(get().onlineUser)
       set({userProfile:res.data})
       get().connectSocket()
       toast.success(res.data.message);
+
       
     } catch (err) {
       console.log("Error in login", err);

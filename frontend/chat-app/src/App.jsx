@@ -9,6 +9,7 @@ import { ProfilePage } from './pages/ProfilePage'
 import {SettingPage} from './pages/SettingPage'
 import { useEffect } from 'react'
 import { authStateStore } from './store/authStateStore'
+import { profileStateStore } from './store/profileStateStore'
 
 import {Loader} from "lucide-react"
 import { Toaster } from "react-hot-toast"
@@ -18,13 +19,14 @@ import { Toaster } from "react-hot-toast"
 
 function App() {
 
-  const {authUser, checkAuth , isCheckingAuth,onlineUser} = authStateStore()
+  const {authUser, checkAuth , isCheckingAuth,onlineUser,userProfile} = authStateStore()
+ 
 
 console.log({onlineUser})
   useEffect(()=>{
     checkAuth()
     
-  },[checkAuth])
+  },[checkAuth,])
 
   console.log(authUser);
 

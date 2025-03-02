@@ -14,7 +14,7 @@ export const ProfilePage = () => {
 
   useEffect(()=>{
     getUserProfilePic()
-  },[getUserProfilePic,profilePic])
+  },[getUserProfilePic,profilePic,userProfile])
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-800 py-8 flex items-center justify-center">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">

@@ -2,11 +2,16 @@ import React from 'react'
 import { useState } from 'react';
 import { authStateStore } from '../store/authStateStore';
 import { chatStateStore } from '../store/chatStateStore';
+import { profileStateStore } from '../store/profileStateStore';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export const Navbar = () => {
   const {setActiveTab,activeTab} = chatStateStore(); 
-    const {loggingOut} = authStateStore();
+  const {profilePic} = profileStateStore();
+    const {loggingOut,userProfile,checkAuth} = authStateStore();
+
+
   return (
    <>
     <div className="flex flex-col-reverse md:flex-row lg:flex-row mx-auto   ">
@@ -16,14 +21,14 @@ export const Navbar = () => {
                <button
                   onClick={()=>setActiveTab("profile")}
                 
-                   className={`p-2 rounded-lg ${
+                   className={`p-1 rounded-lg ${
                      activeTab === "profile" ? "bg-gray-800" : ""
                    }`}
                  >
                   <Link to={"/porfile"}>
-                  <div className='rounded-full border-green-600 size-7'>
+                  <div className=' border-green-600 '>
                      
-                  <img src="/images/defaultavatar.jpg" className='rounded-full' alt="" />
+                  <img  src={userProfile.profilePic? `http://localhost:5000/${userProfile.profilePic}`:"/images/defaultavatar.jpg"}className='rounded-full size-8'  alt="" />
                   </div>
                   </Link>
                   </button>

@@ -33,17 +33,17 @@ export const Contacts = () => {
               <div className="flex  ">
                 <div className=" rounded-full block my-auto mr-4">
                   {onlineUser.includes(contact._id) ? (
-                    <div className="relative size-13 rounded-full">
-                      {contact.pimg ? (
+                    <div className="relative  rounded-full">
+                      {contact.profilePic? (
                         <img
-                          src={contact.pimg}
-                          className="  rounded-full border-4 border-blue-500"
+                          src={`http://localhost:5000/${contact.profilePic}`}
+                          className="  rounded-full size-13 object-center border-2 border-green-500"
                           alt=""
                         />
                       ) : (
                         <img
                           src={`/images/defaultavatar.jpg`}
-                          className="  border-2 rounded-full border-green-500"
+                          className=" rounded-full size-13 object-center border-2 border-green-500"
                           alt=""
                         />
                       )}
@@ -57,16 +57,16 @@ export const Contacts = () => {
                   ) : (
                     <div className="avatar offline">
                       <div className="size-13 rounded-full">
-                        {contact.pimg ? (
+                        {contact.profilePic?(
                           <img
-                            src={contact.pimg}
-                            className=" border-2 rounded-full border-gray-700 chat-image"
+                            src={`http://localhost:5000/${contact.profilePic}`}
+                            className=" border-2 rounded-full size-13 border-gray-700 chat-image"
                             alt=""
                           />
                         ) : (
                           <img
                             src={`/images/defaultavatar.jpg`}
-                            className=" border-2 rounded-full border-gray-700 chat-image"
+                            className=" border-2 rounded-full size-13 border-gray-700 chat-image"
                             alt=""
                           />
                         )}
